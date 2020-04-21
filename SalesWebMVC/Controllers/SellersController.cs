@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SalesWebMVC.Models;
 using SalesWebMVC.Services;
+using SalesWebMVC.Models.ViewModels;
 
 namespace SalesWebMVC.Controllers
 {
@@ -13,9 +14,12 @@ namespace SalesWebMVC.Controllers
 
         private readonly SellerService _sellerService;
 
-        public SellersController(SellerService s)
+        private readonly DepartmentService _departmentService;
+
+        public SellersController(SellerService s, DepartmentService dp)
         {
             _sellerService = s;
+            _departmentService = dp;
         }
 
         public IActionResult Index()
@@ -27,7 +31,9 @@ namespace SalesWebMVC.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var departments = _departmentService.FindAll();
+            var viewModel = new SellerFormViewModel { Departments = departments };
+            return View(viewModel);
         }
 
         [HttpPost]                              //Ação de Post (não de get)
