@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesWebMVC.Models
 {
@@ -10,10 +11,16 @@ namespace SalesWebMVC.Models
 
         public string Name { get; set; }
 
+        [DataType(DataType.EmailAddress)]           //Coloca um link no email
         public string Email { get; set; }
 
+        [Display(Name = "Birth Date")]              //Customiza o que vai aparecer no display da tela
+        [DataType(DataType.Date)]                   //Tira o horário
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]        //Customiza o formato da data
         public DateTime BirthDate { get; set; }
 
+        [Display(Name = "Base Salary")]
+        [DisplayFormat(DataFormatString = "{0:F2}")]    //Coloca o pontinho como separador com duas casas decimais usando o locale dos EUA(na classe startup)
         public double BaseSalary { get; set; }
 
         public Department Department { get; set; }
